@@ -31,19 +31,44 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  const tagOptions = {
+    'on-sale': {
+      text: 'Sale',
+      bgColor: COLORS.primary,
+    },
+    'new-release': {
+      text: 'Just Released!',
+      bgColor: COLORS.secondary,
+    },
+  };
+
+  const tag = tagOptions[variant];
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
+        {tag && (
+          <Tag 
+            style={{
+              '--bg-color': tag.bgColor,
+            }}
+          >
+            {tag.text}
+          </Tag>
+        )}
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price variant={variant}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {variant === 'on-sale' && (
+            <SalePrice>{formatPrice(salePrice)}</SalePrice>
+          )}
         </Row>
       </Wrapper>
     </Link>
@@ -56,6 +81,7 @@ const Link = styled.a`
 `;
 
 const Wrapper = styled.article`
+  position: relative;
   width: 340px;
   height: 312px;
 `;
@@ -71,6 +97,8 @@ const Image = styled.img`
 `;
 
 const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: 1rem;
 `;
 
@@ -79,7 +107,9 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  text-decoration: ${props => props.variant === 'on-sale' && 'line-through'};
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
@@ -88,6 +118,17 @@ const ColorInfo = styled.p`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
+`;
+
+const Tag = styled.span`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  color: ${COLORS.white};
+  font-weight: ${WEIGHTS.bold};
+  background-color: var(--bg-color);
+  padding: 8px;
+  border-radius: 2px;
 `;
 
 export default ShoeCard;
