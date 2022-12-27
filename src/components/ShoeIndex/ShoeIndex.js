@@ -46,11 +46,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
-  margin-top: -10px;
+  align-items: baseline;
+  gap: 32px;
 `;
 
 const LeftColumn = styled.div`
-  flex: 0 0 280px;
+  flex: 0 0 248px;
 `;
 
 const MainColumn = styled.div`
