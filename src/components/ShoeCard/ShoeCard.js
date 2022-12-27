@@ -82,8 +82,6 @@ const Link = styled.a`
 
 const Wrapper = styled.article`
   position: relative;
-  width: 340px;
-  height: 312px;
 `;
 
 const ImageWrapper = styled.div`
